@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
+  const [countries,setCountries] = useState([]);
+  //useEffect(funcname,howmanytimes) -- it takes 2 param 1-funcname/funcdef 2-how many times, so we will pass an empty array
+  useEffect(()=>{
+    //fetching data
+    fetch('https://restcountries.eu/rest/v2/all')
+    .then(res=>res.json())
+    .then(data=>setCountries(data))
+    .catch(error=>console.log(error))
+  },[]);
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <h1>Countries loaded: {countries.length}</h1>
+      
+      {
+        countries.map(country=><li>{country.name}</li>)
+      }
     </div>
   );
 }
