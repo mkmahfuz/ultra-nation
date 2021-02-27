@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
+import Country from "./components/Country/Country";
+
 
 function App() {
   const [countries,setCountries] = useState([]);
@@ -12,13 +14,14 @@ function App() {
     .catch(error=>console.log(error))
   },[]);
  
+  const handleAddCountry = (country)=>{console.log(country)};
   return (
     <div className="App">
 
       <h1>Countries loaded: {countries.length}</h1>
-      
+            
       {
-        countries.map(country=><li>{country.name}</li>)
+        countries.map(country=><Country handleAddCountry={handleAddCountry} country={country} key={country.alpha3Code}></Country>)
       }
     </div>
   );
